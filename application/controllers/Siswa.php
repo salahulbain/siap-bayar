@@ -92,34 +92,10 @@ class Siswa extends CI_Controller
                 $this->load->view('siswa/tambahtransaksi', $data);
                 $this->load->view('templates/footer', $data);
             } else {
-
-                $cek1 = $this->input->post('jmlh_bayar');
-                $cek2 = $this->input->post('bulan_bayar');
-                $cek3 = $this->input->post('tahun_bayar');
-                $bulan = $this->db->get_where('iuran', ['bulan_bayar' => $cek2, 'tahun' => $cek3])->row_array();
-
-                if (!$bulan) {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-                    data iuran untuk bulan <strong>' . $cek2 . '</strong> tahun <strong>' . $cek3 . '</strong> belum di tambah, silahkan lakukan tambah data di master
-                    </div>');
-                    redirect('siswa');
-                } else {
-
-                    if ($bulan['jmlh_bayar_lunas'] == $cek1 && $bulan['tahun'] == $cek3) {
-                        $status = 'Lunas';
-                    } else {
-                        $status = 'Belum Lunas';
-                        $data['lunas'] = (int) $bulan['jumlah_bayar_lunas'];
-                        $data['bayar'] = (int) $cek1;
-                        $data['hasil'] = $data['lunas'] - $data['bayar'];
-                        $sisa = $data['hasil']; //sisa belum berfungai
-                    }
-
-                    $this->Siswas_model->tambahTransaksi($status, $sisa);
+                    $this->Siswas_model->tambahTransaksi();
                 }
             }
         }
-    }
 
     public function hapussiswa($nik)
     {
