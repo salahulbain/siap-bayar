@@ -231,8 +231,4 @@ CREATE TABLE `walikelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-<<<<<<< HEAD
 -- 2020-01-06 09:17:26
-=======
--- 2019-12-27 03:29:31
->>>>>>> 8b67ec4d6c3b0dea6d74bf77e9cff0f06525c5e1
