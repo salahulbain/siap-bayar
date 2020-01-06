@@ -77,8 +77,32 @@ class Siswas_model extends CI_Model
     }
 
 
-    public function tambahTransaksi($status, $sisa)
+    public function tambahTransaksi()
     {
+
+        $jumlahBayar    = $this->input->post('jmlh_bayar');
+        $bulanBayar     = $this->input->post('bulan_bayar');
+        $tahunBayar     = $this->input->post('tahun_bayar');
+        $cek            = $this->db->get_where('iuran', ['bulan_bayar' => $bulanBayar, 'tahun' => $tahunBayar])->row_array();
+
+            if (!$cek) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+                data iuran untuk bulan <strong>' . $bulanBayar . '</strong> tahun <strong>' . $tahunBayar . '</strong> belum di tambah, silahkan lakukan tambah data di master</div>');
+                redirect('siswa');
+
+            } else {
+                
+                $sisa   = $cek['jmlh_bayar_lunas'] - $jumlahBayar;
+                    
+                    if($sisa <= 0){
+                        $status = 'Lunas';
+
+                    }else {
+                        $status = 'Belum Lunas';
+                    }
+                }
+
+
         $data = [
             'id_siswa'          => $this->input->post('id', true),
             'bulan_bayar'       => $this->input->post('bulan_bayar', true),
