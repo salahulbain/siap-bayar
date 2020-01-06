@@ -14,38 +14,113 @@ CREATE TABLE `data_siswa` (
   `nok` bigint(20) NOT NULL,
   `nama_siswa` varchar(128) NOT NULL,
   `jenis_kelamin` varchar(128) NOT NULL,
-  `kelas` varchar(128) NOT NULL,
+  `kelas_id` int(11) NOT NULL,
   `nama_ayah` varchar(128) NOT NULL,
   `nama_ibu` varchar(128) NOT NULL,
   `alamat_ortu` varchar(258) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `data_siswa` (`id`, `nik`, `nok`, `nama_siswa`, `jenis_kelamin`, `kelas`, `nama_ayah`, `nama_ibu`, `alamat_ortu`) VALUES
-(27,	1101707090890912,	1101707090890983,	'Rajali',	'Laki-laki',	'VIII-2',	'Sulaiman',	'Hanifah',	'Aceh Besar'),
-(28,	1101707090890982,	1101707090890986,	'Muhammad Ali',	'Laki-laki',	'IX-2',	'Bakri',	'Fitri',	'Banda Aceh'),
-(29,	1201707090890014,	1201707090890015,	'Martunis',	'Laki-laki',	'IX-1',	'Ismail',	'Fatimah',	'Aceh Besar'),
-(30,	1501707090890014,	1501707090890014,	'M. Karnen',	'Laki-laki',	'VIII-2',	'Abdul Qadir',	'Nurul Hayati',	'Jl. Tgk Di Bak Ue Kec. Madat Kab. Aceh Timur'),
-(31,	1101707090890016,	1101707090890016,	'Wilda',	'Perempuan',	'IX-1',	'Ahmad',	'Ayu',	'Aceh Besar');
+INSERT INTO `data_siswa` (`id`, `nik`, `nok`, `nama_siswa`, `jenis_kelamin`, `kelas_id`, `nama_ayah`, `nama_ibu`, `alamat_ortu`) VALUES
+(2,	2111111111111111,	2111111111111112,	'Fitriyani',	'Perempuan',	2,	'Ahmad',	'Zurriati',	'Banda Aceh'),
+(4,	1111111111111111,	1111111111111113,	'Syahrul Ramadhan',	'Laki-laki',	1,	'Syafruddin',	'Aminah',	'Banda Aceh'),
+(5,	1111111111111114,	1111111111111113,	'Syahrul Muttaqin',	'Laki-laki',	1,	'Syafruddin',	'Aminah',	'Banda Aceh'),
+(6,	1111111111111115,	1111111111111113,	'baili syuhada coba',	'Laki-laki',	5,	'',	'Aminah',	'banda aceh');
+
+DROP TABLE IF EXISTS `iuran`;
+CREATE TABLE `iuran` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bulan_bayar` varchar(128) NOT NULL,
+  `jmlh_bayar_lunas` bigint(20) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `iuran` (`id`, `bulan_bayar`, `jmlh_bayar_lunas`, `tahun`) VALUES
+(1,	'Januari',	600000,	2020),
+(2,	'Februari',	600000,	2020),
+(3,	'Maret',	600000,	2020),
+(4,	'April',	600000,	2020),
+(5,	'Mei',	600000,	2020),
+(6,	'Juni',	600000,	2020),
+(7,	'Juli',	600000,	2020),
+(8,	'Agustus',	600000,	2020),
+(9,	'September',	600000,	2020),
+(10,	'Oktober',	600000,	2020),
+(11,	'November',	600000,	2020),
+(12,	'Desember',	600000,	2020),
+(13,	'Januari',	700000,	2021);
+
+DROP TABLE IF EXISTS `kelas`;
+CREATE TABLE `kelas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kelas` varchar(128) NOT NULL,
+  `id_kurikulum` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `kelas` (`id`, `nama_kelas`, `id_kurikulum`) VALUES
+(1,	'Kelas VII-1',	1),
+(2,	'Kelas VII-2',	1),
+(3,	'Kelas VIII-1',	1),
+(4,	'Kelas VIII-2',	1),
+(5,	'Kelas IX-1',	1),
+(6,	'Kelas IX-2',	1);
+
+DROP TABLE IF EXISTS `kurikulum`;
+CREATE TABLE `kurikulum` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(128) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `semester` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `kurikulum` (`id`, `nama`, `tahun`, `semester`) VALUES
+(1,	'K-2013 Paket',	2020,	'Genap'),
+(2,	'K-2013 Paket',	2020,	'Ganjil');
 
 DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nik_siswa` bigint(20) NOT NULL,
-  `nama_siswa` varchar(128) NOT NULL,
-  `kelas` varchar(128) NOT NULL,
-  `nama_walikelas` varchar(128) NOT NULL,
-  `jmlh_iuran` bigint(20) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `bulan_bayar` varchar(128) NOT NULL,
+  `tahun_bayar` bigint(20) NOT NULL,
   `jmlh_bayar` bigint(20) NOT NULL,
   `status` varchar(128) NOT NULL,
+  `sisa` bigint(20) NOT NULL,
+  `tgl_bayar` int(11) NOT NULL,
+  `nama_petugas` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `transaksi` (`id`, `nik_siswa`, `nama_siswa`, `kelas`, `nama_walikelas`, `jmlh_iuran`, `jmlh_bayar`, `status`) VALUES
-(1,	1171046010120001,	'1171056010120001',	'IX-2',	'',	500000,	500000,	'Lunas'),
-(2,	1201707090890014,	'Martunis',	'IX-1',	'Ardiansyah',	500000,	50000,	'Lunas'),
-(3,	1101707090890912,	'Rajali',	'VIII-2',	'Rahmad Zulhijjah, S.Pd.',	500000,	50000,	'Lunas'),
-(4,	1501707090890014,	'M. Karnen',	'VIII-2',	'Ardiansyah',	500000,	400000,	'Belum Lunas');
+INSERT INTO `transaksi` (`id`, `id_siswa`, `bulan_bayar`, `tahun_bayar`, `jmlh_bayar`, `status`, `sisa`, `tgl_bayar`, `nama_petugas`) VALUES
+(1,	2,	'Januari',	0,	600000,	'Lunas',	0,	1576907294,	'Salahul Bain'),
+(2,	2,	'Februari',	0,	500000,	'Belum Lunas',	0,	1576910805,	'Salahul Bain'),
+(3,	2,	'Maret',	0,	500000,	'Belum Lunas',	0,	1576912439,	'Salahul Bain'),
+(4,	5,	'Januari',	0,	600000,	'Lunas',	0,	1576915999,	'Salahul Bain'),
+(5,	4,	'Januari',	0,	500000,	'Belum Lunas',	0,	1576916014,	'Salahul Bain'),
+(6,	5,	'Maret',	0,	500000,	'Belum Lunas',	0,	1576982929,	'Salahul Bain'),
+(7,	4,	'Mei',	0,	400000,	'Belum Lunas',	0,	1576982994,	'Salahul Bain'),
+(8,	5,	'Januari',	2021,	600000,	'Lunas',	0,	1577285188,	'Baili Suhada'),
+(9,	4,	'Januari',	2021,	600000,	'Lunas',	0,	1577285322,	'Baili Suhada'),
+(10,	5,	'Januari',	2021,	600000,	'Lunas',	0,	1577285514,	'Baili Suhada'),
+(11,	2,	'Januari',	2021,	600000,	'Lunas',	0,	1577285554,	'Baili Suhada'),
+(12,	2,	'Januari',	2021,	600000,	'Lunas',	0,	1577285593,	'Baili Suhada'),
+(13,	2,	'Januari',	2021,	600000,	'Lunas',	0,	1577285610,	'Baili Suhada'),
+(14,	2,	'Januari',	2021,	600000,	'Belum Lunas',	0,	1577285874,	'Baili Suhada'),
+(15,	4,	'Februari',	2021,	600000,	'Belum Lunas',	0,	1577285921,	'Baili Suhada'),
+(16,	6,	'Mei',	2021,	600000,	'Belum Lunas',	0,	1577286052,	'Baili Suhada'),
+(17,	6,	'Januari',	2020,	400000,	'Belum Lunas',	-400000,	1577286905,	'Baili Suhada'),
+(18,	6,	'Januari',	2020,	500000,	'Belum Lunas',	-500000,	1577287319,	'Baili Suhada'),
+(19,	6,	'Januari',	2020,	500000,	'Belum Lunas',	-500,	1577287370,	'Baili Suhada'),
+(20,	6,	'Januari',	2020,	500000,	'Belum Lunas',	-500000,	1577287503,	'Baili Suhada'),
+(21,	6,	'Januari',	2020,	500000,	'Belum Lunas',	500000,	1577287798,	'Baili Suhada'),
+(22,	6,	'Januari',	2020,	500000,	'Belum Lunas',	500000,	1577287848,	'Baili Suhada'),
+(23,	6,	'Desember',	2020,	400000,	'Belum Lunas',	400000,	1577288147,	'Baili Suhada'),
+(24,	6,	'Mei',	2020,	400000,	'Belum Lunas',	-400000,	1577288349,	'Baili Suhada'),
+(25,	6,	'Oktober',	2020,	500000,	'Belum Lunas',	-500000,	1577288465,	'Baili Suhada'),
+(26,	6,	'November',	2020,	500000,	'Belum Lunas',	-500000,	1577288551,	'Baili Suhada');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -62,15 +137,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
 (7,	'Salahul Bain',	'salahul@gmail.com',	'profile_user.jpg',	'$2y$10$UKKPcRTGe9euoWPRVHd1EOG0NCvKxWuqaYU1nW6MNO5cJh8lVPhAO',	1,	1,	1571583076),
-(12,	'Salahul Bain',	'salahul.bain@gmail.com',	'profile_user5.jpg',	'$2y$10$Wj.rOxGtLymtBQgQlA1ePuQX1QwfvvLYmhVn95vxWadHiH7UcIDEi',	1,	1,	1572533547),
-(13,	'Admin Siap Bayar',	'siapbayaronline@gmail.com',	'profile_user6.jpg',	'$2y$10$KMF9Ag5Y3q.70fkeswYt4..rvL9vBdhGZcY376EUaVG60Cf/eK4Xq',	1,	1,	1572792711),
-(14,	'Baili Suhada',	's1c.salahul1@gmail.com',	'default.jpg',	'$2y$10$OzAekxnEmTE0xABA1qenOeSAg97sC8DIgaSKKFghIRUWHkztYttvq',	1,	0,	1572801090),
-(15,	'Muhammad Aulia',	'auliaalbenseh@gmail.com',	'default.jpg',	'auliaalbenseh@gmail.com',	3,	1,	1573480049),
-(16,	'Ramawati',	'ramawati.smp@gmail.com',	'default.jpg',	'ramawati.smp@gmail.com',	3,	1,	1573739869),
-(17,	'Miksalmina',	'miksalmina.smp@gmail.com',	'default.jpg',	'miksalmina.smp@gmail.com',	3,	1,	1573739948),
-(18,	'Jamaliah',	'jamaliah.smp@gmail.com',	'default.jpg',	'jamaliah.smp@gmail.com',	3,	1,	1573739977),
-(19,	'Ratna Juhari',	'ratnajuhari.smp@gmail.com',	'default.jpg',	'ratnajuhari.smp@gmail.com',	3,	1,	1573740016),
-(20,	'Fazrian',	'fazryanp@gmail.com',	'default.jpg',	'$2y$10$eJvjC4rg7Y/Coi1sFN6tMe6r3ALsYgy1O.eN8ehjjusLJBYFaR8Cq',	1,	0,	1573876944);
+(8,	'Baili Suhada',	'bailisuhada@smpislamik.sch.id',	'user-profile-icon-7.jpg',	'$2y$10$3J01pcyXlw.8qJhTP0HYBOnxVdfRTtj/xFm8YPqDxAM2L0QsPVBAu',	1,	1,	1576980466);
 
 DROP TABLE IF EXISTS `user_access_menu`;
 CREATE TABLE `user_access_menu` (
@@ -134,7 +201,8 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (11,	2,	'Tambah Siswa',	'siswa/tambahsiswa',	'fas fa-fw fa-users',	1),
 (12,	2,	'Transaksi',	'siswa/transaksi',	'fas fa-fw fa-cash-register',	1),
 (14,	3,	'Wali Kelas',	'walikelas',	'fas fa-fw fa-chalkboard-teacher',	1),
-(15,	6,	'Wali Kelas',	'teacher',	'fas fa-fw fa-chalkboard-teacher',	1);
+(15,	6,	'Wali Kelas',	'teacher',	'fas fa-fw fa-chalkboard-teacher',	1),
+(16,	1,	'Master',	'admin/master',	'fas fa-fw fa-database',	1);
 
 DROP TABLE IF EXISTS `user_token`;
 CREATE TABLE `user_token` (
@@ -157,20 +225,10 @@ CREATE TABLE `walikelas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
-  `kelas_binaan` varchar(128) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `is_active` int(11) NOT NULL,
-  `image` varchar(128) NOT NULL,
+  `kelas_id` int(11) NOT NULL,
   `date_created` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `walikelas` (`id`, `name`, `email`, `kelas_binaan`, `role_id`, `is_active`, `image`, `date_created`) VALUES
-(2,	'Ardiansyah',	'ardiansyah.smp@gmail.com',	'IX-1',	3,	1,	'default.jpg',	1572801090),
-(3,	'Muhammad Aulia',	'auliaalbenseh@gmail.com',	'VII-2',	3,	1,	'default.jpg',	1573480049),
-(4,	'Ramawati',	'ramawati.smp@gmail.com',	'IX-2',	3,	1,	'default.jpg',	1573739869),
-(5,	'Miksalmina',	'miksalmina.smp@gmail.com',	'VII-1',	3,	1,	'default.jpg',	1573739948),
-(6,	'Jamaliah',	'jamaliah.smp@gmail.com',	'VIII-1',	3,	1,	'default.jpg',	1573739977),
-(7,	'Ratna Juhari',	'ratnajuhari.smp@gmail.com',	'VIII-2',	3,	1,	'default.jpg',	1573740016);
 
--- 2019-12-09 03:15:34
+-- 2020-01-06 09:17:26
